@@ -13,7 +13,7 @@ nameEntry.pack(side=tk.LEFT)
 nameFrame.pack(side=tk.TOP)
 
 tOpts = [1,2,4,8]
-nOpts = [100,1000,10000,100000,1000000]
+nOpts = [1000,10000,100000,1000000]
 
 simFrame = tk.Frame(mainWindow)
 threadsLabel = tk.Label(simFrame, text="Threads: ")
@@ -21,7 +21,7 @@ threadsLabel.pack(side=tk.LEFT)
 tVar = tk.IntVar()
 tVar.set(1)
 nVar = tk.IntVar()
-nVar.set(100)
+nVar.set(1000)
 threadDrop = tk.OptionMenu(simFrame, tVar, *tOpts)
 threadDrop.pack(side=tk.LEFT)
 sampleLabel = tk.Label(simFrame, text="Trials: ")
@@ -29,6 +29,23 @@ sampleLabel.pack(side=tk.LEFT)
 sampleDrop = tk.OptionMenu(simFrame, nVar, *nOpts)
 sampleDrop.pack(side=tk.LEFT)
 simFrame.pack(side=tk.BOTTOM)
+
+# Add a frame for some checkbox options
+checkboxFrame = tk.Frame(mainWindow)
+
+btlVar = tk.IntVar()
+btlButton = tk.Checkbutton(checkboxFrame, text='BTL', onvalue=1, offvalue=0, variable=btlVar)
+btlButton.pack(side=tk.LEFT)
+
+particleVar = tk.IntVar()
+particleButton = tk.Checkbutton(checkboxFrame, text='Particle', onvalue=1, offvalue=0, variable=particleVar)
+particleButton.pack(side=tk.LEFT)
+
+heavycalVar = tk.IntVar()
+heavycalButton = tk.Checkbutton(checkboxFrame, text='HeavyCal', onvalue=1, offvalue=0, variable=heavycalVar)
+heavycalButton.pack(side=tk.LEFT)
+
+checkboxFrame.pack(side=tk.TOP)
 
 
 lockFrame = tk.Frame(mainWindow)
@@ -59,9 +76,9 @@ btlLabel.pack()
 btlSpin.pack()
 btlFrame.pack(side=tk.LEFT)
 
-simButton = tk.Button(simFrame,text="Run", command = lambda : runSim(int(attackSpin.get()), int(lockSpin.get()), int(damageSpin.get()),int(btlSpin.get()), nVar.get(), tVar.get(), nameEntry.get()))
+simButton = tk.Button(simFrame,text="Run", command = lambda : runSim(int(attackSpin.get()), int(lockSpin.get()), int(damageSpin.get()), int(btlSpin.get()), nVar.get(), tVar.get(), nameEntry.get(), int(btlVar.get()), int(particleVar.get()), int(heavycalVar.get()) ))
 simButton.pack(side=tk.LEFT)
 simFrame.pack(side=tk.BOTTOM)
 
-
 mainWindow.mainloop()
+

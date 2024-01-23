@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import math
 
 # the main function
-def runSim(attacks, lock, damage, burncap, trials, threadNum, label):
+def runSim(attacks, lock, damage, burncap, trials, threadNum, label, isBtl, isParticle, isHeavyCal):
+    print("isBtl : %2d, isParticle: %2d, isHeavyCal: %2d" % (isBtl, isParticle, isHeavyCal)) 
 
     threads = []
     dataMain = []
@@ -17,7 +18,7 @@ def runSim(attacks, lock, damage, burncap, trials, threadNum, label):
 
         data = np.empty(n, dtype=object)
         dataMain.append(data)
-        thread = threading.Thread(target=simThread,args=(attacks, lock, damage, burncap,data))
+        thread = threading.Thread(target=simThread,args=(attacks, lock, damage, burncap, isBtl, isParticle, isHeavyCal, data))
         threads.append(thread)
 
     for thread in range(threadNum):
@@ -93,10 +94,10 @@ def runSim(attacks, lock, damage, burncap, trials, threadNum, label):
     
 
 # function run by threads
-def simThread(attacks, lock, damage, burncap, storage):
+def simThread(attacks, lock, damage, burncap, isBtl, isParticle, isHeavyCal, storage):
 
     for index in range(len(storage)):
-        storage[index] = btlSim(attacks, lock, damage, burncap)
+        storage[index] = btlSim(attacks, lock, damage, burncap, isBtl, isParticle, isHeavyCal)
 
 
 # allocates a number of trials to each thread
